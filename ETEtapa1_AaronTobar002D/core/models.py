@@ -30,8 +30,16 @@ class proveedor(models.Model):
     cantrasenna= models.CharField(max_length=100, verbose_name='contrasenna')
     moneda= models.ForeignKey(moneda, on_delete=models.CASCADE)
 
+    @property
+    def imagenURL(self):
+        try:
+            url= self.imagen.url
+        except:
+            url=''
+        return url
+
     def __str__(self):
-        return self.numero
+        return self.p_nombre
 
 
 
@@ -43,5 +51,13 @@ class producto(models.Model):
     imagen= models.ImageField(verbose_name='imagen')
     descripcion= models.CharField(max_length=500, verbose_name='descripcion')
 
+    @property
+    def imagenURL(self):
+        try:
+            url= self.imagen.url
+        except:
+            url=''
+        return url
+
     def __str__(self):
-        return self.numero
+        return self.nombre
