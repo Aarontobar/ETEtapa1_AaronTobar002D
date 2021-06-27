@@ -8,67 +8,92 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
          rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/estilosusuario.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <style>
+            #carrito{
+                width: 25px;
+                display: inline-block;
+                margin-left: 15px;
+            }
+
             .fondo{
-                background-image: url("{% static 'img/fotofoto.jpg' %}");
+                background-image: url("{% static 'img/fotoel.jpg' %}");
                 background-repeat: no-repeat;
                 background-size: cover;
+                min-height: 50vh;
             }
 
             .container{
                 margin: 0 auto;
                 padding: 24px;
                 display: grid;
+                grid-template-columns: repeat(12,1fr);
                 gap: 24px;
                 align-items: center;
+            }
+
+            .contenedor{
+                grid-column: 7/14;
             }
 
             .panel{
                 padding: 24px;
                 border-radius: 8px;
                 backdrop-filter: blur(20px);
+                min-height: 50vh;
             }
 
-            .cart-row{
-                display: flex;
-                align-items: flex-stretch;
-                padding-bottom: 10px;
-                margin-bottom: 10px;
-                border-bottom: 1px solid #ececec;
-            }
-
-            .imagen{
-                width: 100px;
-                border-radius: 8px;
-            }
-
-            @media only screen and (max-width: 1000px){
+            @media only screen and (max-width: 660px){
                 .container{
                     padding:0;
                 }
     
                 .contenedor{
-                    width: 100%;
-                    height: 100%;
+                    grid-column: 1/14;
                     padding: 0;
                 }
 
                 .panel{
                     width:100%;
-                    height: 100%;
                 }
 
                 .imagen{
                     width: 50px;
                 }
             }
+
+            .input {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .input label{
+                font-size: 16px;
+                display: block;
+            }
+
+            .input input{
+                border: none;
+                border-bottom: 1px solid;
+                width: 100%;
+                outline: none;
+                background: transparent;
+            }
         </style>
+        <script>
+            function obtener(){
+                var id= document.getElementById("id").value;
+
+                return id;
+            }
+        </script>
     </head>
     <body>
         {% load static %}
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand navtext" href="#">
                     <img src="{% static 'img/logo.png' %}" alt="" width="75">gamezone
@@ -87,10 +112,10 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">agregar porveedor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">agregar proveedor</a></li>
                         <li class="nav-item"><a class="nav-link" href="">modificar proveedor</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">ver proveedores</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'eliminar' %}">eliminar proveedor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'proveedor' %}">ver proveedores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">eliminar proveedor</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"></a></li>
                     </ul>
                 </div>
@@ -101,23 +126,14 @@
             <div class="container">
                 <div class="contenedor">
                     <div class="panel">
-                        <div class="cart-row">
-                            <div style="flex: 2;"><strong>id</strong></div>
-                            <div style="flex: 2;"><strong>logo</strong></div>
-                            <div style="flex: 2;"><strong>nombre</strong></div>
-                            <div style="flex: 2;"><strong>pais</strong></div>
-                            <div style="flex: 2;"><strong>moneda</strong></div>
-                        </div>
-
-                        {% for proveedor in proveedores %}
-                            <dic class="cart-row">
-                                <div style="flex: 2;"><strong>{{proveedor.numero}}</strong></div>
-                                <div style="flex: 2;"><img src="{{proveedor.imagenURL}}" class="imagen"></div>
-                                <div style="flex: 2;"><strong>{{proveedor.p_nombre}}</strong></div>
-                                <div style="flex: 2;"><strong>{{proveedor.pais}}</strong></div>
-                                <div style="flex: 2;"><strong>{{proveedor.moneda}}</strong></div>
-                            </dic>
-                        {% endfor %}
+                        <form id="formulario" method="POST" action="{% url 'quitar' %}">
+                            {% csrf_token %}
+                            <div class="input">
+                                <label for="">ingrese la id de el proveedor a eliminar</label>
+                                <input type="number" required name="id" id="id">
+                            </div>
+                            <button type="submit" class="btn btn-outline-dark" style="margin: 5px;">!Eliminar¡</button>
+                        </form>
                     </div>
                 </div>
             </div>
