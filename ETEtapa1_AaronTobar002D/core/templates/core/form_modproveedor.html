@@ -20,7 +20,7 @@
             }
 
             .fondo{
-                background-image: url("{% static 'img/fondomodificar.jpg' %}");
+                background-image: url("{% static 'img/fondoformmod.jpg' %}");
                 background-repeat: no-repeat;
                 background-size: cover;
                 min-height: 50vh;
@@ -90,7 +90,7 @@
             .input input{
                 border: none;
                 border-bottom: 1px solid;
-                width: 100%;
+                width: 80%;
                 outline: none;
                 background: transparent;
             }
@@ -101,6 +101,11 @@
                 background: transparent;
                 border-radius: 8px;
             }
+
+            .dos{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
         </style>
     </head>
     <body>
@@ -108,7 +113,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand navtext" href="#">
-                    <img src="{% static 'img/logo1.png' %}" alt="" width="75">gamezone
+                    <img src="{% static 'img/logo.png' %}" alt="" width="75">gamezone
                 </a>
 
                 <button class="navbar-toggler"
@@ -124,13 +129,10 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'nosotros' %}">nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'galeria' %}">galeria</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">cerrar sesion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">{{ user.username }}</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'carrito' %}">
-                            <img id="carrito" src="{% static 'img/carritoIcono.png' %}"></a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'formproveedor' %}">agregar proveedor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'modproveedor' %}">modificar proveedor</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'proveedor' %}">ver proveedores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'eliminar' %}">eliminar proveedor</a></li>
                     </ul>
                 </div>
             </div>
@@ -140,25 +142,59 @@
             <div class="container">
                 <div class="contenedor">
                     <div class="panel">
-                        <form method="POST" action="" id="formulario" enctype="multipart/form-data">
+                        <form method="POST" id="formulario" action="{% url 'modificar' proveedores.numero %}">
                             {% csrf_token %}
+                            <div class="dos">
+                                <div class="input">
+                                    {{datos.form.p_nombre.label}}
+                                    {{datos.form.p_nombre}}
+                                </div>
+                                <div class="input">
+                                    {{datos.form.s_nombre.label}}
+                                    {{datos.form.s_nombre}}
+                                </div>
+                            </div>
+                            <div class="dos">
+                                <div class="input">
+                                    {{datos.form.ap_paterno.label}}
+                                    {{datos.form.ap_paterno}}
+                                </div>
+                                <div class="input">
+                                    {{datos.form.ap_materno.label}}
+                                    {{datos.form.ap_materno}}
+                                </div>
+                            </div>
+                            <div class="input">
+                                {{datos.form.telefono.label}}
+                                {{datos.form.telefono}}
+                            </div>
+                            <div class="input">
+                                {{datos.form.direccion.label}}
+                                <br>
+                                {{datos.form.direccion}}
+                            </div>
+                            <div class="input">
+                                {{datos.form.email.label}}
+                                <br>
+                                {{datos.form.email}}
+                            </div>
+                            <div class="dos">
+                                <div class="input">
+                                    {{datos.form.pais.label}}
+                                    <br>
+                                    {{datos.form.pais}}
+                                </div>
 
-                            <div class="input">
-                                {{form.nombre.label}}
-                                {{form.nombre}}
+                                <div class="input">
+                                    {{datos.form.moneda.label}}
+                                    <br>
+                                    {{datos.form.moneda}}
+                                </div>
                             </div>
                             <div class="input">
-                                {{form.descripcion.label}}
-                                <hr>
-                                {{form.descripcion}}
-                            </div>
-                            <div class="input">
-                                {{form.precio.label}}
-                                {{form.precio}}
-                            </div>
-                            <div class="input">
-                                {{form.foto.label}}
-                                {{form.foto}}
+                                {{datos.form.imagen.label}}
+                                <br>
+                                {{datos.form.imagen}}
                             </div>
                             <button type="submit" class="btn-outline-dark">Modificar</button>
                         </form>

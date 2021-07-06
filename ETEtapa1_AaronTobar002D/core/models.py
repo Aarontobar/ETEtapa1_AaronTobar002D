@@ -17,7 +17,7 @@ class moneda(models.Model):
         return self.nombre
 
 class proveedor(models.Model):
-    numero= models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='id')
+    numero= models.IntegerField(primary_key=True, serialize=False, verbose_name='id')
     imagen= models.ImageField(verbose_name='foto')
     p_nombre= models.CharField(max_length=50, verbose_name='p_nombre')
     s_nombre= models.CharField(max_length=50, verbose_name='s_nombre')

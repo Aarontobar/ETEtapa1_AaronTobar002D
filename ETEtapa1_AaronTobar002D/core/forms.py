@@ -6,8 +6,9 @@ class proveedorform(ModelForm):
 
     class Meta:
         model= proveedor
-        fields= ['p_nombre', 's_nombre', 'ap_paterno', 'ap_materno', 'telefono', 'direccion', 'email', 'pais', 'cantrasenna', 'moneda', 'imagen']
+        fields= ['numero','p_nombre', 's_nombre', 'ap_paterno', 'ap_materno', 'telefono', 'direccion', 'email', 'pais', 'cantrasenna','moneda', 'imagen']
         labels= {
+            'numero': 'ingrese id del proveedor',
             'p_nombre': 'nombre proveedor',
             's_nombre': 'segundo nombre',
             'ap_paterno': 'apellido paterno',
@@ -16,11 +17,16 @@ class proveedorform(ModelForm):
             'direccion': 'ingrese direccion',
             'email': 'email proveedor',
             'pais': 'seleccione pais',
-            'cantrasenna': 'ingrese contraseña',
             'moneda': 'seleccione moneda',
             'imagen': 'seleccione foto'
         }
         widgets={
+            'numero': forms.NumberInput(
+                attrs={
+                    'id': 'id',
+                    'name': 'id'
+                }
+            ),
             'p_nombre': forms.TextInput(
                 attrs={
                     'id': 'nombre',
@@ -59,6 +65,7 @@ class proveedorform(ModelForm):
             ),
             'email': forms.EmailInput(
                 attrs={
+                    'autocomplete': 'current-password',
                     'id': 'email',
                     'name': 'email'
                 }
@@ -71,8 +78,8 @@ class proveedorform(ModelForm):
             ),
             'cantrasenna': forms.PasswordInput(
                 attrs={
-                    'id': 'contraseña',
-                    'name': 'contraseña'
+                    'id': 'contrasenna',
+                    'name': 'contrasenna'
                 }
             ),
             'moneda': forms.Select(
